@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+    <title>{% block title %}My amazing site{% endblock %}</title>
+</head>
+
+<body>
+<h1 align="center">
+{% block header %}
+Polls, ladies and gentlemen.
+{% endblock %}
+</h1>
+<br>
+       <div id="content" align="center">
+        {% block content %}{% endblock %}
+    </div>
+<br>
+<br> 
+    <div id="sidebar" align="left">
+        {% block sidebar %}
+        <ul>
+            <a href="/polls/">Back to Polls</a>
+        </ul>
+        {% endblock %}
+    </div>
+</body>
+</html>

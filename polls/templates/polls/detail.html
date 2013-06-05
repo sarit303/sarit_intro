@@ -1,5 +1,10 @@
-<h1>{{ poll.question }}</h1>
+{% extends "base.html" %}
 
+{% block header %}
+Vote: {{ poll.question }}
+{% endblock %}
+
+{% block content %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'polls:vote' poll.id %}" method="post">
@@ -11,3 +16,4 @@
 <br>
 <input type="submit" value="Vote or Die" />
 </form>
+{% endblock %}
