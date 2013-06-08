@@ -2,28 +2,115 @@
 <html lang="en">
 {% load staticfiles %}
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
-    <title>{% block title %}My amazing site{% endblock %}</title>
+    <meta charset="utf-8">
+    <title>{% block title %}Sarit's Poll Site{% endblock %}</title>
+    
+    <!-- Le styles -->
+    <link href="{% static 'polls/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/docs.css" rel="stylesheet">
+    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="code/mysite/polls/bootstrap-carousel.js" rel="stylesheet">
+    
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-146052-10']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  
 </head>
 
-<body>
-<h1 align="center">
-{% block header %}
-Polls, ladies and gentlemen.
-{% endblock %}
-</h1>
-<br>
-       <div id="content" align="center">
-        {% block content %}{% endblock %}
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+    <!-- Navbar
+    ================================================== -->
+    {% block navbar %}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="/polls/">Home</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="/polls/">Polls</a>
+              </li>
+              <li class="">
+                <a href="/admin/">Admin</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-<br>
-<br> 
-    <div id="sidebar" align="left">
-        {% block sidebar %}
-        <ul>
-            <a href="/polls/">Back to Polls</a>
-        </ul>
-        {% endblock %}
+    {% endblock %}
+    
+    <br>
+    <br>
+    <br>
+    
+
+    <!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h1>
+    {% block header %}
+    The Polls Page
+    {% endblock %}</h1>
+    <p class="lead">
+    {% block subheader %}
+    Vote on a poll to see results.
+    {% endblock %}</p>    
+  </div>
+</header>
+    
+    <br>
+    
+    {% block content %}
+    {% endblock %}
+    
+    <br>
+    <br>
+    <br>
+    <hr>
+    
+    <div class="bs-docs-example">
+        <address>
+            <strong>
+            {% block companyname %}
+            Atto Consulting
+            {% endblock %}
+            </strong><br>
+
+            {% block address %}
+            Made in<br>
+            New York, NY<br>
+            {% endblock %}
+        </address>
+
+        <address>
+            <strong>
+            {% block fullname %}
+            Sarit Moran
+            {% endblock %}
+            </strong><br>
+            <a href="mailto:#">
+            {% block email %}
+            sarit@attoconsulting.com
+            {% endblock %}</a>
+        </address>
     </div>
+
+
 </body>
 </html>
