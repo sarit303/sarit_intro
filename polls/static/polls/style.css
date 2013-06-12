@@ -6,3 +6,10 @@ body {
 .sidebar-content ul {
   list-style-type: none;
 }
+
+.poll-list {
+  margin-left:0px;
+  text-align:center;
+  clear:left;
+  clear:right;
+}
