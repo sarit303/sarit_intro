@@ -1,23 +1,34 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block sidebar-content %}
 {% if latest_poll_list %}
-    
+
+    <ul class="poll-list"> 
     {% for poll in latest_poll_list %}
-    <div class="row">        
-        <div class="span4">
+	<li class="poll">
         <a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a>
-        </div>
-    </div>
+    </li>
     {% endfor %}
-
-
+    </ul>
 {% else %}
     <p>No polls are available.</p>
     
-<!-- Example row of columns -->
-      
 {% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>Big ass headline!</h1>
+
+<ul class="poll-list"> 
+    {% for poll in latest_poll_list %}
+	<li class="span4 poll-block">
+        <a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a>
+    </li>
+    {% endfor %}
+    </ul>
+<p>Nulla food truck fixie, bicycle rights lomo adipisicing cornhole. Disrupt fugiat banjo, intelligentsia voluptate Austin magna veniam locavore roof party kogi put a bird on it pariatur. Veniam fixie fanny pack kitsch, +1 semiotics bicycle rights mlkshk ad narwhal 8-bit officia eiusmod. Put a bird on it mixtape do, sriracha skateboard gluten-free veniam iPhone craft beer Marfa pitchfork gastropub. High Life fashion axe chillwave irure disrupt Pinterest. In lo-fi street art cliche, sunt et shabby chic master cleanse swag 3 wolf moon vinyl food truck excepteur. Locavore fugiat meggings keytar, magna kogi small batch sriracha.
+</p>
+<p>Mlkshk pour-over cupidatat quinoa aliquip excepteur. Consectetur umami gluten-free sartorial beard fingerstache. Four loko do before they sold out sriracha. Kitsch single-origin coffee craft beer, ennui vegan letterpress pitchfork. Aliquip aesthetic consequat occupy food truck whatever quinoa try-hard wolf, Pinterest 8-bit est street art kogi. Tofu nihil ex, messenger bag Brooklyn anim craft beer exercitation jean shorts PBR meggings asymmetrical Neutra esse. DIY gluten-free laborum sint, scenester bicycle rights pariatur.	</p>
 {% endblock %}
 
 
