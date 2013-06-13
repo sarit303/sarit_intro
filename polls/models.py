@@ -28,5 +28,7 @@ class Choice(models.Model):
     
     def __unicode__(self):
         return self.choice_text
-        
-
+       
+class Page(models.Model):
+    name = models.CharField(max_length="20", primary_key=True)
+    content = models.TextField(blank=True)

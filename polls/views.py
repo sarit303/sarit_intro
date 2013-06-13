@@ -1,11 +1,11 @@
 # Create your views here.
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, render_to_response
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from polls.models import Choice, Poll
+from polls.models import Choice, Page, Poll
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -50,3 +50,22 @@ def vote(request, poll_id):
         # with POST data. This prevents the data from being posted twice if a
         # user hits the Back button. 
         return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+
+def view_page(request, page_name):
+    try:
+        page = Page.objects.get(pk=page_name)
+    except Page.DoesNotExist:
+        return render_to_response("create.html", {"page_name":page_name})
+
+         
+def edit_page(request, page_name):
+    try:
+        return "Hello."
+    except Page.DoesNotExist:
+        return "Uh Oh."
+        
+def save_page(request, page_name):
+    try:
+        return "You wanna save?"
+    except Page.DoesNotExist:
+        return "The page doesn't exist."

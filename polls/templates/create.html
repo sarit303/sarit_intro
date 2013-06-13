@@ -3,7 +3,7 @@
 {% load staticfiles %}
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}Sarit's Poll Site{% endblock %}</title>
+    <title>{% block title %}Create Page{% endblock %}</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Le styles -->
@@ -50,10 +50,13 @@
   <div class="row-fluid">
     <div class="span12 main-content">
       {% block header %}
+      <title>{{page_name}} - Create</title>
+      <p> This page does not exist <a href="mysite/{{page_name}}/edit/">Create?</a>
       {% endblock %}
       {% block carousel %}
       {% endblock %}
       {% block content %}
+      
       {% endblock %}
     </div>
   </div>

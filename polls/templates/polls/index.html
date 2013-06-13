@@ -1,26 +1,42 @@
 {% extends "base.html" %}
 
-{% block content %}    
-    
-<div class="span12">
-    <div class="hero-unit">
-        <h1>CinePoll</h1>
-            <p>This project polls you on your favorite films and recommends movies based on what you've chosen.</p>
-            <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+
+{% block carousel %}
+
+<div id="myCarousel" class="carousel slide hero-unit fluid">
+    <h1>CinePoll</h1>
+    <div class="carousel-inner fluid">
+        <div class="item active">
+            <img src="/static/img/hamburg2.jpg"/>    
+        </div>
+        <div class="item">
+            <img src="/static/img/hamburg3.jpg"/>
+        </div>
+        <div class="item">
+            <img src="/static/img/hamburg2.jpg"/>
+        </div>
+        <div class="item">
+            <img src="/static/img/hamburg3.jpg"/>
+        </div>
     </div>
 
-    </div><!--/row-->
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
 
 
-<ul class="media-grid poll-list">
-    <li class="span12">
+{% endblock %}
+{% block content %}    
+    
+<ul class="span12 poll-list fluid">
+    <div class="span12 fluid">
     {% for poll in latest_poll_list %}
-        <div class="span4 thumbnail">
-            <img data-src="hamburg.png" alt="">
+        <div class="span4 thumbnail fluid">
+            <img data-src="/static/img/hamburg2.jpg"> 
             <h4><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></h4>
         </div>
     {% endfor %}
-    </li>
+    </div>
 </ul>
 
 
