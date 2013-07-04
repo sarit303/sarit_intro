@@ -23,12 +23,19 @@ class Choice(models.Model):
     poll = models.ForeignKey(Poll)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+    result = models.TextField(blank=True, null=True)
+
     
     # adding a unicode method for better object representation
     
     def __unicode__(self):
         return self.choice_text
        
-class Page(models.Model):
-    name = models.CharField(max_length="20", primary_key=True)
-    content = models.TextField(blank=True)
+#class Page(models.Model):
+ #   poll = models.ForeignKey(Poll) 
+  #  name = models.CharField(max_length=200, blank=True, null=True)
+   # content = models.TextField(blank=True, null=True)
+
+    
+#    def __unicode__(self):
+ #       return self.content

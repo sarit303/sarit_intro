@@ -10,6 +10,12 @@ Thanks for voting!
 {% endblock %}
 
 {% block content %}
+<br>
+<br>
+{% for choice in poll.choice_set.all %}
+{{ choice.result }}
+{% endfor %}
+
 <ul>
 {% for choice in poll.choice_set.all %}
     <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
@@ -19,4 +25,5 @@ Thanks for voting!
 <br>
 
 <a href="{% url 'polls:detail' poll.id %}">Vote again?</a>
+
 {% endblock %}

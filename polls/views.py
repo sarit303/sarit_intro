@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from polls.models import Choice, Page, Poll
+from polls.models import Choice, Poll #, Page
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -33,6 +33,10 @@ class ResultsView(generic.DetailView):
     model = Poll
     template_name = 'polls/results.html'
     
+#class PageView(generic.DetailView):
+#    model = Page
+#    template_name = 'polls/page.html'
+    
 def vote(request, poll_id):
     p = get_object_or_404(Poll, pk=poll_id)
     try:
@@ -51,21 +55,3 @@ def vote(request, poll_id):
         # user hits the Back button. 
         return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
 
-def view_page(request, page_name):
-    try:
-        page = Page.objects.get(pk=page_name)
-    except Page.DoesNotExist:
-        return render_to_response("create.html", {"page_name":page_name})
-
-         
-def edit_page(request, page_name):
-    try:
-        return "Hello."
-    except Page.DoesNotExist:
-        return "Uh Oh."
-        
-def save_page(request, page_name):
-    try:
-        return "You wanna save?"
-    except Page.DoesNotExist:
-        return "The page doesn't exist."
