@@ -12,13 +12,12 @@ Thanks for voting!
 {% block content %}
 <br>
 <br>
-{% for choice in poll.choice_set.all %}
-{{ choice.result }}
-{% endfor %}
+
+{{ choice.result|safe }}
 
 <ul>
-{% for choice in poll.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% for available_choice in poll.choice_set.all %}
+    <li>{{ available_choice.choice_text }} -- {{ available_choice.votes }} vote{{ available_choice.votes|pluralize }}</li>
 {% endfor %}
 </ul>
 
