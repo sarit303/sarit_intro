@@ -10,6 +10,13 @@ Thanks for voting!
 {% endblock %}
 
 {% block content %}
+
+{% if choice_direct %}
+
+<p>You got here from a direct link!</p>
+{{ choice.result|safe }}
+
+{% else %}
 <br>
 <br>
 
@@ -24,5 +31,5 @@ Thanks for voting!
 <br>
 
 <a href="{% url 'polls:detail' poll.id %}">Vote again?</a>
-
+{% endif %}
 {% endblock %}

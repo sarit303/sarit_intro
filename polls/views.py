@@ -30,6 +30,12 @@ class DetailView(generic.DetailView):
         """
         return Poll.objects.filter(pub_date__lte=timezone.now())
     
+
+class ResultView(generic.DetailView):
+    model = Poll
+    template_name = 'polls/results.html'
+
+
 def results(request):
     '''
     Displays the results of the poll and the value of the selected {{ choice.result|safe }}
@@ -45,7 +51,8 @@ def results(request):
     # Check that the choice goes with the poll and redirect to polls/detail.html if it doesn't.
 
     template_name = 'polls/results.html'
-    return render_to_response(template_name, { 'poll' : poll, 'choice' : choice }, context_instance=RequestContext(request))
+    return render_to_response(template_name, { 'poll' : poll, 'choice' : choice, 'choice_direct' : True, }, 
+        context_instance=RequestContext(request))
     
 #class PageView(generic.DetailView):
 #    model = Page
@@ -68,5 +75,9 @@ def vote(request, poll_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents the data from being posted twice if a
         # user hits the Back button. 
-        return HttpResponseRedirect(reverse('polls:results', kwargs={'pk': p.id,'choice': selected_choice.id } ))
+        return render(request, 'polls/results.html', {
+                'poll' : p,
+                'choice' : selected_choice,
+            })
+        # return HttpResponseRedirect(reverse('polls:results', kwargs={'pk': p.id,'choice': selected_choice.id } ))
 
