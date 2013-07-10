@@ -36,27 +36,39 @@ class ResultView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
-def results(request):
+def results(request, poll_id, choice_id):
+
+
     '''
     Displays the results of the poll and the value of the selected {{ choice.result|safe }}
     '''
-
+    
     current_url = request.path
 
     # Get current poll from url and set poll = to the poll object
-    poll = None
+    poll = get_object_or_404(Poll, pk=poll_id)
+    
     # Do string manipulation here to pull out the choice number, then set choice = choice object
-    choice = None
+    choice = get_object_or_404(Choice, pk=choice_id)
 
     # Check that the choice goes with the poll and redirect to polls/detail.html if it doesn't.
-
+    if (choice in poll.choice_set.all()):
+        return render(request, 'polls/results.html', {
+        'poll' : poll,
+        'choice' : choice,
+    }) 
+         
+    else:    
+        return render(request, 'polls/detail.html', {
+        'poll': poll, 
+        'error_message': "That choice didn't match with that poll.",
+    })   
+        
+    
     template_name = 'polls/results.html'
     return render_to_response(template_name, { 'poll' : poll, 'choice' : choice, 'choice_direct' : True, }, 
         context_instance=RequestContext(request))
-    
-#class PageView(generic.DetailView):
-#    model = Page
-#    template_name = 'polls/page.html'
+   
     
 def vote(request, poll_id):
     p = get_object_or_404(Poll, pk=poll_id)
