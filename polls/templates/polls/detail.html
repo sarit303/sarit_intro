@@ -14,11 +14,6 @@
     <label for="choice{{ forloop.counter }}">{{choice.choice_text}}
     </label>
 {% endfor %}
-{% for custom in poll.choice_set.all %}
-<form action=" url 'polls:vote' poll.id %} method="post">
-    <input type="text" />
-</form>
-{% endfor %}
 <br>
 <input type="submit" value="Vote Now!" />
 </form>

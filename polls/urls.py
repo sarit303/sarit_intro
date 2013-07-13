@@ -18,4 +18,9 @@ urlpatterns = patterns('',
     
     # my results view with choice
     url(r'^(?P<poll_id>\d+)/results/(?P<choice_id>\d+)/$', views.results, name='results'),
+
+    # write-in url
+    url(r'writein/(/d*)/$', views.writein, name='writein'),
+
 )
+

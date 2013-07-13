@@ -28,11 +28,11 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
     result = models.TextField(blank=True, null=True)
     write_in = models.BooleanField(default=False)
-    if write_in == True:
-        form = CustomForm()
-    else: 
-        None
-            
+  
+    def writein(self):
+        return "<a href='%s'>WriteIn</a>" % reverse("views.writein", args=[self.pk])
+
+              
     #write_in_field = forms.CharField(required=False)
     
     # adding a unicode method for better object representation

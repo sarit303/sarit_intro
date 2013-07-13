@@ -23,13 +23,14 @@ class IndexView(generic.ListView):
     
 class DetailView(generic.DetailView):
     model = Poll
-    template_name = 'polls/detail.html'
-    
+    template_name = 'polls/detail.html'       
+        
     def get_queryset(self):
         """
         Excludes any polls that aren't published yet.
         """
         return Poll.objects.filter(pub_date__lte=timezone.now())
+       
     
 
 class ResultView(generic.DetailView):
@@ -50,20 +51,7 @@ def results(request, poll_id, choice_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     
     # Do string manipulation here to pull out the choice number, then set choice = choice object
-    choice = get_object_or_404(Choice, pk=choice_id)
-    if request.method == 'POST':
-        form = CustomForm(request.POST)
-        if form.is_valid():
-            f = CustomForm(request.POST)
-            custom = f.save()
-            p.choice_set.create(choice=custom)
-        else: 
-            pass
-    else: 
-        pass
-
-
-       
+    choice = get_object_or_404(Choice, pk=choice_id)       
 
     # Check that the choice goes with the poll and redirect to polls/detail.html if it doesn't.
     if (choice in poll.choice_set.all()):
@@ -77,7 +65,7 @@ def results(request, poll_id, choice_id):
         'poll': poll, 
         'error_message': "That choice didn't match with that poll.",
     })   
-      
+       
 
     template_name = 'polls/results.html'
     return render_to_response(template_name, { 'poll' : poll, 'choice' : choice, 'choice_direct' : True, }, 
@@ -86,9 +74,9 @@ def results(request, poll_id, choice_id):
     
 def vote(request, poll_id):    
     p = get_object_or_404(Poll, pk=poll_id)
+
     try:
         selected_choice = p.choice_set.get(pk=request.POST['choice'])
-    except(CustomForm() == "True" ):
         selected_choice = p.choice_set.create(choice=CustomForm())
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the poll voting form.
@@ -108,4 +96,66 @@ def vote(request, poll_id):
                 'choice' : selected_choice,
             })
         # return HttpResponseRedirect(reverse('polls:results', kwargs={'pk': p.id,'choice': selected_choice.id } ))
+        
+    def writein(request, choice_id):
+        choice = Choice.objects.get(pk=choice_id)
+        choice.write_in = True
+        choice.save()
+        return HttpResponseRedirect(reverse('polls:results'))
+        
 
+
+"""
+    def writein(self, request, poll_id, choice_id):
+        choice = get_object_or_404(Choice, pk=choice_id)
+        if (choice.write_in == "True"):
+            return render(request, 'polls/detail.html', {
+            'poll': poll, 
+            'error_message': "yoohoo!",
+        }) 
+        
+        else:
+           return render(request, 'polls/detail.html', {
+                    'poll': poll, 
+                    'error_message': "eh?",
+                })            
+
+
+
+
+def writein(request, poll_id, choice_id):
+  
+    current_url = request.path
+
+    # Get current poll from url and set poll = to the poll object
+    poll = get_object_or_404(Poll, pk=poll_id)
+    
+    # Do string manipulation here to pull out the choice number, then set choice = choice object
+    choice = get_object_or_404(Choice, pk=choice_id)       
+
+    # Check that the choice goes with the poll and redirect to polls/detail.html if it doesn't.
+    if (choice in poll.choice_set.all()):
+        return render(request, 'polls/results.html', {
+        'poll' : poll,
+        'choice' : choice,
+    }) 
+         
+    else:    
+        return render(request, 'polls/detail.html', {
+        'poll': poll, 
+        'error_message': "That choice didn't match with that poll.",
+    })   
+
+    # check that the choice does not have the write-in option checked, 
+    # and if it does, redirect to a form. 
+    if (choice(write_in = "True")):
+        return render(request, 'polls/', {
+        'poll': poll,
+        'choice' : choice,
+    })
+     
+
+    template_name = 'polls/results.html'
+    return render_to_response(template_name, { 'poll' : poll, 'choice' : choice, 'choice_direct' : True, }, 
+        context_instance=RequestContext(request))
+"""
