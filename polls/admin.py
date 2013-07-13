@@ -1,10 +1,13 @@
 from django.contrib import admin
 from polls.models import Choice, Poll
+from django.utils import timezone
+import datetime
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
-    extra = 3
-
+    min_num = 3
+    extra = 0
+        
 class PollAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,              {'fields': ['question']}),

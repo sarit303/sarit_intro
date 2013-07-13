@@ -5,8 +5,9 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
+import datetime
 
-from polls.models import Choice, Poll #, Page
+from polls.models import Choice, Poll, CustomForm
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -50,6 +51,19 @@ def results(request, poll_id, choice_id):
     
     # Do string manipulation here to pull out the choice number, then set choice = choice object
     choice = get_object_or_404(Choice, pk=choice_id)
+    if request.method == 'POST':
+        form = CustomForm(request.POST)
+        if form.is_valid():
+            f = CustomForm(request.POST)
+            custom = f.save()
+            p.choice_set.create(choice=custom)
+        else: 
+            pass
+    else: 
+        pass
+
+
+       
 
     # Check that the choice goes with the poll and redirect to polls/detail.html if it doesn't.
     if (choice in poll.choice_set.all()):
@@ -63,17 +77,19 @@ def results(request, poll_id, choice_id):
         'poll': poll, 
         'error_message': "That choice didn't match with that poll.",
     })   
-        
-    
+      
+
     template_name = 'polls/results.html'
     return render_to_response(template_name, { 'poll' : poll, 'choice' : choice, 'choice_direct' : True, }, 
         context_instance=RequestContext(request))
    
     
-def vote(request, poll_id):
+def vote(request, poll_id):    
     p = get_object_or_404(Poll, pk=poll_id)
     try:
         selected_choice = p.choice_set.get(pk=request.POST['choice'])
+    except(CustomForm() == "True" ):
+        selected_choice = p.choice_set.create(choice=CustomForm())
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the poll voting form.
         return render(request, 'polls/detail.html', {
