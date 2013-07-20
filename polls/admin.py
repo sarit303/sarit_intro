@@ -18,6 +18,16 @@ class PollAdmin(admin.ModelAdmin):
     list_filter = ['pub_date']
     search_fields = ['question']
     date_hierarchy = 'pub_date'
+
+    def save_model(self, request, obj, form, change):
+        if obj.has_write_in:
+            try:
+                # create a new Choice with is_other_choice = True
+                # add the OtherChoice to this poll
+                pass
+            except:
+                # error message?
+                pass
+        obj.save()
     
 admin.site.register(Poll, PollAdmin)
-

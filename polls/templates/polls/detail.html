@@ -10,10 +10,22 @@
 <form action="{% url 'polls:vote' poll.id %}" method="post">
 {% csrf_token %}
 {% for choice in poll.choice_set.all %}
+	{% if not choice.is_other_choice %}
+
     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
     <label for="choice{{ forloop.counter }}">{{choice.choice_text}}
     </label>
+    
+    {% else %}
+
+	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    <label for="choice{{ forloop.counter }}">{{choice.choice_text}}
+    </label>
+    <input type="text" name="write_in_choice" id="write_in_choice" />
+
+    {% endif %}
 {% endfor %}
+
 <br>
 <input type="submit" value="Vote Now!" />
 </form>
