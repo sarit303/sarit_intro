@@ -1,5 +1,5 @@
 from django.contrib import admin
-from polls.models import Choice, Poll
+from polls.models import Choice, Poll, Park
 from django.utils import timezone
 import datetime
 
@@ -19,5 +19,13 @@ class PollAdmin(admin.ModelAdmin):
     search_fields = ['question']
     date_hierarchy = 'pub_date'
     
+class ParkAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Park Name',              {'fields': ['park']}),
+        ('Park Information',              {'fields': ['park_info']}),
+    ]
+    list_display = ('park', 'park_info')
+    
 admin.site.register(Poll, PollAdmin)
+admin.site.register(Park, ParkAdmin)
 

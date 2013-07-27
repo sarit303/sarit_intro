@@ -3,7 +3,7 @@
 {% load staticfiles %}
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}NYC Pollster{% endblock %}</title>
+    <title>{% block title %}PICKYOURPARK: NYC{% endblock %}</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Le styles -->
@@ -19,25 +19,25 @@
 <!-- Top navigation
 ================================================== -->
 {% block navbar %}
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <button type="button" class="btn btn-navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="brand" href="/polls/">Home</a>
-      <div class="nav-collapse collapse">
-        <ul class="nav">
+      <a class="brand" href="/polls/">PICKYOURPARK: NYC</a>
+        <ul class="nav pull-right">
           <li class="">
-            <a href="/polls/">Polls</a>
+            <a href="/polls/">Home</a>
+          <li class="">
+            <a href="/polls/">RESULTS?</a>
           </li>
           <li class="">
             <a href="/admin/">Admin</a>
           </li>
         </ul>
-      </div>
     </div>
   </div>
 </div>
@@ -54,6 +54,13 @@
       {% block carousel %}
       {% endblock %}
       {% block content %}
+      {% endblock %}
+    </div>
+
+  <div id="footer" class="row-fluid">
+    <div class="span16 ">
+        <img src="/static/img/bar.png" alt="Footer" />
+      {% block footer %}
       {% endblock %}
     </div>
   </div>

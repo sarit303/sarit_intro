@@ -7,19 +7,41 @@ from django.views import generic
 from django.utils import timezone
 import datetime
 
-from polls.models import Choice, Poll, CustomForm
+from polls.models import Choice, Poll, Park
+
+class ParkView(generic.DetailView):
+    model = Park
+    template_name = 'polls/park.html'
+        
+    def get_queryset(self):
+        return Park.objects.filter()
+
+def park(request, park_id):
+    current_url = request.path
+    try:
+        park = Park.objects.get(pk=park_id)
+    except Park.DoesNotExist:
+        raise Http404
+    return render(request, 'polls/park.html', {'park': park})
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
-    context_object_name = 'latest_poll_list'
+    context_object_name = 'park_list'
     
     def get_queryset(self):
-        """Return the last five published polls (not including those set to be
-        published in the future).
-        """
-        return Poll.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+        return Park.objects.all
+
+#class IndexView(generic.ListView):
+#    template_name = 'polls/index.html'
+#    context_object_name = 'latest_poll_list'
+#    
+#    def get_queryset(self):
+#        """Return the last five published polls (not including those set to be
+#        published in the future).
+#        """
+#        return Poll.objects.filter(
+#            pub_date__lte=timezone.now()
+#        ).order_by('-pub_date')[:5]
     
 class DetailView(generic.DetailView):
     model = Poll
@@ -97,11 +119,11 @@ def vote(request, poll_id):
             })
         # return HttpResponseRedirect(reverse('polls:results', kwargs={'pk': p.id,'choice': selected_choice.id } ))
         
-    def writein(request, choice_id):
-        choice = Choice.objects.get(pk=choice_id)
-        choice.write_in = True
-        choice.save()
-        return HttpResponseRedirect(reverse('polls:results'))
+#    def writein(request, choice_id):
+#        choice = Choice.objects.get(pk=choice_id)
+#        choice.write_in = True
+#        choice.save()
+#        return HttpResponseRedirect(reverse('polls:results'))
         
 
 

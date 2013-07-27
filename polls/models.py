@@ -9,6 +9,8 @@ from django.core import validators
 class Poll(models.Model):
     question = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+#    has_write_in = models.BooleanField()
+    
     
     # adding a unicode method for better object representation
     
@@ -27,13 +29,6 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200) 
     votes = models.IntegerField(default=0)
     result = models.TextField(blank=True, null=True)
-    write_in = models.BooleanField(default=False)
-  
-    def writein(self):
-        return "<a href='%s'>WriteIn</a>" % reverse("views.writein", args=[self.pk])
-
-              
-    #write_in_field = forms.CharField(required=False)
     
     # adding a unicode method for better object representation
     
@@ -41,12 +36,9 @@ class Choice(models.Model):
         return self.choice_text
 
 
-class CustomForm(ModelForm):
-    class Meta:
-        model = Choice
-        fields = ['choice_text', 'votes', 'write_in']
-    # Creating a form to add an article
-#    if write_in == True:
-#        form = CustomForm()
-#    else: 
-#        None
+class Park(models.Model): 
+    park = models.CharField(max_length=200)
+    park_info = models.TextField(blank=True, null=True)
+    
+    def __unicode__(self):
+        return self.park_info

@@ -7,6 +7,13 @@ urlpatterns = patterns('',
     url(r'^$', views.IndexView.as_view(), name='index'),
     # ex: /polls/5/
     url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
+    
+    # Park View
+    url(r'^park/(?P<pk>\d+)/$', views.ParkView.as_view(), name='park'),
+
+    
+    
+    
     # ex: /polls/5/results/
     # url(r'^(?P<pk>\d+)/results/$', views.ResultView.as_view(), name='results'),
 
@@ -20,7 +27,7 @@ urlpatterns = patterns('',
     url(r'^(?P<poll_id>\d+)/results/(?P<choice_id>\d+)/$', views.results, name='results'),
 
     # write-in url
-    url(r'writein/(/d*)/$', views.writein, name='writein'),
+#    url(r'writein/(/d*)/$', views.writein, name='writein'),
 
 )
 
