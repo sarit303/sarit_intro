@@ -52,8 +52,7 @@ class DetailView(generic.DetailView):
         Excludes any polls that aren't published yet.
         """
         return Poll.objects.filter(pub_date__lte=timezone.now())
-       
-    
+
 
 class ResultView(generic.DetailView):
     model = Poll
@@ -61,12 +60,9 @@ class ResultView(generic.DetailView):
 
 
 def results(request, poll_id, choice_id):
-
-
     '''
     Displays the results of the poll and the value of the selected {{ choice.result|safe }}
     '''
-    
     current_url = request.path
 
     # Get current poll from url and set poll = to the poll object
@@ -99,13 +95,19 @@ def vote(request, poll_id):
 
     try:
         selected_choice = p.choice_set.get(pk=request.POST['choice'])
-        selected_choice = p.choice_set.create(choice=CustomForm())
+#        selected_choice = p.choice_set.create(choice=CustomForm())
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the poll voting form.
         return render(request, 'polls/detail.html', {
             'poll': p,
             'error_message': "You didn't select a choice.",
         })
+#    else:
+#        if selected_choice.is_other_choice:
+#            None
+            # take the value in the text box
+            # do some validation
+            # create a new choice object or update the existing one 
     else:
         selected_choice.votes += 1
         selected_choice.save()
@@ -113,10 +115,11 @@ def vote(request, poll_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents the data from being posted twice if a
         # user hits the Back button. 
-        return render(request, 'polls/results.html', {
-                'poll' : p,
-                'choice' : selected_choice,
-            })
+    return render(request, 'polls/results.html', {
+            'poll' : p,
+            'choice' : selected_choice,
+        })
+            
         # return HttpResponseRedirect(reverse('polls:results', kwargs={'pk': p.id,'choice': selected_choice.id } ))
         
 #    def writein(request, choice_id):
@@ -181,3 +184,4 @@ def writein(request, poll_id, choice_id):
     return render_to_response(template_name, { 'poll' : poll, 'choice' : choice, 'choice_direct' : True, }, 
         context_instance=RequestContext(request))
 """
+

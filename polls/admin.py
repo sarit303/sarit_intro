@@ -18,7 +18,7 @@ class PollAdmin(admin.ModelAdmin):
     list_filter = ['pub_date']
     search_fields = ['question']
     date_hierarchy = 'pub_date'
-    
+
 class ParkAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Park Name',              {'fields': ['park']}),
@@ -29,3 +29,15 @@ class ParkAdmin(admin.ModelAdmin):
 admin.site.register(Poll, PollAdmin)
 admin.site.register(Park, ParkAdmin)
 
+#    def save_model(self, request, obj, form, change):
+#        if obj.has_write_in:
+#            try:
+                # create a new Choice with is_other_choice = True
+                # add the OtherChoice to this poll
+#                pass
+#            except:
+                # error message?
+#                pass
+#        obj.save()
+    
+#admin.site.register(Poll, PollAdmin)
